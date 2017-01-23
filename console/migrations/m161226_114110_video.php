@@ -6,18 +6,23 @@ class m161226_114110_video extends Migration
 {
     public function up()
     {
+        $tableOptions = null;
+        if ($this->db->driverName === 'mysql') {
+            // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
+            $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
+        }
         $this->createTable('video', [
             'id' => $this->primaryKey(),
             'name'=>$this->string()->notNull()->unique(),
             'path'=>$this->string(),
             'description'=>$this->string()->notNull(),
-            'topic_id'=>$this->integer()->notNull()->unique(),
+            'topic_id'=>$this->integer()->notNull(),
             'video_id'=>$this->string()->notNull()->unique(),
             'created_at' => $this->integer()->notNull(),
             'created_by' => $this->integer()->notNull(),
             'updated_at' => $this->integer()->notNull(),
             'updated_by' => $this->integer()->notNull(),
-        ]);
+        ],$tableOptions);
     }
 
     public function down()

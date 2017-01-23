@@ -2,27 +2,24 @@
 
 use yii\db\Migration;
 
-class m161226_121334_like extends Migration
+class m161226_114817_subscription extends Migration
 {
-
     public function up()
     {
-        $tableOptions = null;
+        $tableOptions=null;
         if ($this->db->driverName === 'mysql') {
-            // http://stackoverflow.com/questions/766809/whats-the-difference-between-utf8-general-ci-and-utf8-unicode-ci
             $tableOptions = 'CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE=InnoDB';
         }
-        $this->createTable('topic', [
+        $this->createTable('{{%subscription}}', [
             'user_id'=>$this->integer(),
-            'video_id'=>$this->integer(),
+            'section_id'=>$this->integer(),
+            'PRIMARY KEY (`user_id`, `section_id`)',
         ],$tableOptions);
     }
 
     public function down()
     {
-        echo "m161226_121334_like cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('subscription');
     }
 
     /*
